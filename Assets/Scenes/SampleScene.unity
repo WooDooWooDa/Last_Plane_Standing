@@ -255,8 +255,8 @@ MonoBehaviour:
   _maxSpeed: 50
   _minSteer: 30
   _maxSteer: 60
-  tiltAmount: 60
-  tiltSmooth: 5
+  tiltAmount: 0
+  tiltSmooth: 0
 --- !u!4 &289084855
 Transform:
   m_ObjectHideFlags: 0
@@ -334,10 +334,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 519420031}
   _minFOV: 45
-  _maxFOV: 60
+  _maxFOV: 55
   _playerPlane: {fileID: 1065870024}
   _targetPointToFollow: {fileID: 1854387070}
-  _cameraFollowSpeed: 1
+  _cameraFollowSpeed: 0.5
 --- !u!212 &350592425
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -498,9 +498,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 45
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 4.21875
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -538,15 +538,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
   m_AssetsPPU: 32
-  m_RefResolutionX: 640
-  m_RefResolutionY: 360
+  m_RefResolutionX: 384
+  m_RefResolutionY: 256
   m_CropFrame: 0
   m_GridSnapping: 0
   m_FilterMode: 0
@@ -851,8 +851,8 @@ MonoBehaviour:
   _maxSpeed: 50
   _minSteer: 30
   _maxSteer: 60
-  tiltAmount: 60
-  tiltSmooth: 5
+  tiltAmount: 0
+  tiltSmooth: 0
 --- !u!114 &1065870024
 MonoBehaviour:
   m_ObjectHideFlags: 0

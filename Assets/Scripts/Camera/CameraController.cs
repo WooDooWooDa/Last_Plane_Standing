@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
         transform.position = new Vector3(nextCamPos.x, nextCamPos.y, transform.position.z);
 
         var speed = _playerPlane.planeMovement.SpeedPercentage;
-        //_camera.
+        _camera.fieldOfView = Mathf.Lerp(_minFOV, _maxFOV, speed);
     }
 
     private void OnDrawGizmos()
