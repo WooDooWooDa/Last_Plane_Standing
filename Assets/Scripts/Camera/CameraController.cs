@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
         _camera.fieldOfView = Mathf.Lerp(_minFOV, _maxFOV, speed);
     }
 
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         var camPos = transform.position;

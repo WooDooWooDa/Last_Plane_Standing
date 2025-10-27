@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00bd3ddff7c5493a8ad8c2f806616327, type: 3}
+  m_Name: NormalBulletSpeedUpgrade1
+  m_EditorClassIdentifier: 
+  upgradeName: Bullet Speed 1
+  upgradeDescription: 
+  currentLevel: 3
+  modifierUpgraded: {fileID: 11400000, guid: 2f02ba985ad273d468179dc54fe128e1, type: 2}
+  modifierUpgradeValues:
+  - 1
+  - 1.1
+  - 1.2
+  - 1.3

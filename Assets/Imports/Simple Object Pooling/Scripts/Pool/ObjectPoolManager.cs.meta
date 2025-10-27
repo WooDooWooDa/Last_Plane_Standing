@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: dd885e29ef876a54e8880b791af1e185
+AssetOrigin:
+  serializedVersion: 1
+  productId: 324680
+  packageName: Simple Object Pooling - Easy way to improve your game performance
+  packageVersion: 1.1.0
+  assetPath: Assets/The Black Cat/Simple Object Pooling/Scripts/Pool/ObjectPoolManager.cs
+  uploadId: 778793

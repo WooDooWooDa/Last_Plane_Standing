@@ -1,25 +1,47 @@
 ﻿using System;
+using BlackCatPool;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.InputSystem;
 
 namespace Plane
 {
     public class PlayerPlaneController : MonoBehaviour
     {
+        public static PlayerInputActions Inputs;
+        
         [SerializeField] private Plane _playerPlane;
         [SerializeField] private float _minSpeedRange = 0.5f;
         [SerializeField] private float _maxSpeedRange;
         [SerializeField] private Transform _followCameraAnchor;
-        [SerializeField] private bool _controllerActive = true;
         [SerializeField] private bool _debug = true;
         
+        private readonly UnityEngine.Plane _mousePlane = new(Vector3.back, Vector3.zero);
+
+        private void Awake()
+        {
+            Inputs = new PlayerInputActions();
+            Inputs.Player.ShootGun.performed += Shoot;
+        }
+
+        private void Shoot(InputAction.CallbackContext obj)
+        {
+            _playerPlane.Cannon.TryShoot();
+        }
+
         private void Update()
         {
-            if (_controllerActive)
-            {
-                UpdatePlaneTarget();
-                UpdatePlaneSpeed();
-            }
+            UpdatePlaneTarget();
+            UpdatePlaneSpeed();
+        }
+
+        private void OnEnable()
+        {
+            Inputs.Enable();
+        }
+
+        private void OnDisable()
+        {
+            Inputs.Disable();
         }
 
         private void FixedUpdate()
@@ -84,12 +106,11 @@ namespace Plane
 
         public Vector3 GetActualMousePosition()
         {
-            var plane = new UnityEngine.Plane(Vector3.back, Vector3.zero);
-            //var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var mouseSteerPosition = Inputs.Player.Steer.ReadValue<Vector2>();
+            var ray = Camera.main.ScreenPointToRay(mouseSteerPosition);
             var mousePos = Vector3.zero;
-            if (plane.Raycast(ray, out var enter)) {
-                mousePos = ray.GetPoint(enter);
+            if (_mousePlane.Raycast(ray, out var distance)) {
+                mousePos = ray.GetPoint(distance);
             }
             return mousePos;
         }

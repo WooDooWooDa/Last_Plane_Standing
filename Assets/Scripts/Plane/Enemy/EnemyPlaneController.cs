@@ -11,6 +11,7 @@ namespace Plane.Enemy
         
         private void Start()
         {
+            //TODO : target mouse position ???
             _playerPlane = FindFirstObjectByType<PlayerPlane>();
         }
 
