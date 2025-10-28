@@ -5,6 +5,9 @@ namespace ValueSystem.Modifiers
 {
     public abstract class ValueModifier<T> : ScriptableObject
     {
+        public string symbol => modifierSymbol;
+        public T GetModifier() => modifier;
+        
         [SerializeField] private bool negativeModifier;
         protected T modifier;
         protected string modifierSymbol;     // +,x,etc

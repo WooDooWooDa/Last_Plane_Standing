@@ -5,7 +5,7 @@ namespace Projectiles.ProjectileData
 {
     public abstract class ProjectileSO : ScriptableObject
     {
-        public FloatValue speed;
+        public FloatSharedValue speed;
         public float ttl = 10f;
     }
 }

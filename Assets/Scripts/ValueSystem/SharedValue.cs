@@ -1,19 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using ValueSystem.Modifiers;
 
 namespace ValueSystem
 {
-    [CreateAssetMenu(fileName = "newFloatValue", menuName = "SO/Values/IntValue", order = 0)]
-    public class IntValue : ScriptableObject
+    public abstract class SharedValue<T> : ScriptableObject
     {
         [SerializeField] private string displayValueName;
-        [SerializeField] private int value;
-        [SerializeField] private List<ValueModifier<int>> modifiers = new();
+        [SerializeField] private T value;
+        [SerializeField] private List<ValueModifier<T>> modifiers = new();
         
-        public int GetBase() => value;
-        public int Get()
+        public void SetBase(T newValue) => this.value = newValue;
+        
+        public T GetBase() => value;
+        public T Get()
         {
             return modifiers.Count <= 0 ? GetBase() :
                 modifiers.OrderBy(x => x.GetRank()).Aggregate(GetBase(), (res, next) =>
