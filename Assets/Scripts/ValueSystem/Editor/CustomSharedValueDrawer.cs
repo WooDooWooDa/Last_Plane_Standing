@@ -32,7 +32,7 @@ namespace ValueSystem.Editor
             if (valueSO != null)
             {
                 var type = valueSO.GetType();
-                var getMethod = type.GetMethod("Get");
+                var getMethod = type.GetMethod("GetBase");
 
                 if (getMethod != null)
                 {

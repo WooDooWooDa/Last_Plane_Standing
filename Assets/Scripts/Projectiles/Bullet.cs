@@ -13,6 +13,7 @@ namespace Projectiles
         [SerializeField] private BulletDataSO baseBulletData;
         
         private BulletDataSO _bulletData;
+        private float _currentSpeed;
         private float _flightTimeLeft;
 
         private void Awake()
@@ -35,6 +36,7 @@ namespace Projectiles
         {
             _bulletData = bulletData;
             _flightTimeLeft = _bulletData.ttl;
+            _currentSpeed = _bulletData.speed.Get();
         }
 
         private void Update()
@@ -48,8 +50,7 @@ namespace Projectiles
 
         private void FixedUpdate()
         {
-            Debug.Log(_bulletData.speed.Get());
-            _rb.linearVelocity = transform.up * (_bulletData.speed.Get() / 10);
+            _rb.linearVelocity = transform.up * (_currentSpeed / 10);
         }
     }
 }
