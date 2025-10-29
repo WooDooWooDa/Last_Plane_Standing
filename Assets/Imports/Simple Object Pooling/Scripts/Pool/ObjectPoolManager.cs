@@ -123,6 +123,16 @@ namespace BlackCatPool
             Debug.LogWarning($"Pool identified by \"{identifier}\" doesn't exist.");
             return null;
         }
+        
+        public T GetObject<T>(GameObject identifier, bool setActive = false) where T : Component 
+        {
+            if (TryGetPool(identifier, out var pool))
+            {
+                return pool.Get<T>(setActive);
+            }
+            Debug.LogWarning($"Pool identified by \"{identifier}\" doesn't exist.");
+            return null;
+        }
 
         /// <summary>
         /// Try to obtain a pooled object from the specific pool.<br></br><br></br>

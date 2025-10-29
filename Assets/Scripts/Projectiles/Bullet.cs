@@ -1,6 +1,7 @@
 ﻿using System;
 using BlackCatPool;
 using Damage;
+using Effects;
 using Plane;
 using Projectiles.ProjectileData;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace Projectiles
     //todo : extend from a projectile class common to missile
     public class Bullet : MonoBehaviour, IPoolable, IDamageSource
     {
+        [SerializeField] private SpriteAnimationEffect _bulletHitEffect;
         [SerializeField] private Rigidbody2D _rb;
         
         private BulletDataSO _bulletData;
@@ -72,8 +74,10 @@ namespace Projectiles
             if (other.gameObject.TryGetComponent<IDamageable>(out var damageable))
             {
                 ApplyDamage(damageable);
+
+                var hitEffect = ObjectPoolManager.Instance.GetObject<SpriteAnimationEffect>(_bulletHitEffect.gameObject, true);
+                hitEffect.StartEffect(transform.position);
                 
-                //todo : play hit effect
                 gameObject.ReturnToPool();
             }
             else
