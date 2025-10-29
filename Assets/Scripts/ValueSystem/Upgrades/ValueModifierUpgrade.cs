@@ -6,7 +6,7 @@ using ValueSystem.Modifiers;
 
 namespace ValueSystem.Upgrades
 {
-    [CreateAssetMenu(fileName = "newValueModifierUpgrade", menuName = "SO/Modifiers/Upgrade", order = 99)]
+    [CreateAssetMenu(fileName = "newValueModifierUpgrade", menuName = "SO/Modifiers/ModifierUpgrade", order = 99)]
     public class ValueModifierUpgrade : ScriptableObject
     {
         [SerializeField] private string upgradeName;
@@ -14,9 +14,9 @@ namespace ValueSystem.Upgrades
         
         [SerializeField] private int currentLevel = 0;
         [SerializeField] private ValueModifier<float> modifierUpgraded;
-        [SerializeField] private List<float> modifierUpgradeValues = new() { 1f };
+        [SerializeField] private List<float> modifierUpgradeValues = new();
 
-        private int maxLevel => modifierUpgradeValues.Count - 1;
+        private int maxLevel => modifierUpgradeValues.Count;
 
         [Button, ShowIf(nameof(canLevelUp))]
         public void LevelUp()
@@ -24,18 +24,25 @@ namespace ValueSystem.Upgrades
             if (modifierUpgradeValues.Count <= 0 || !canLevelUp) return;
             currentLevel++;
             
-            modifierUpgraded.SetModifierValue(modifierUpgradeValues[currentLevel]);
+            ApplyUpgradeToModifier();
         }
 
-        [Button]
+        [Button, ShowIf(nameof(hasModifier))]
         public void ResetUpgrade()
         {
             currentLevel = 0;
-            modifierUpgraded.SetModifierValue(modifierUpgradeValues[0]);
+            modifierUpgraded?.ResetModifier();
         }
         
-        private bool canLevelUp => modifierUpgraded is not null && currentLevel < maxLevel;
+        private bool canLevelUp => hasModifier && currentLevel < maxLevel;
+        private bool hasModifier => modifierUpgraded is not null;
 
+        private void ApplyUpgradeToModifier()
+        {
+            if (currentLevel > 0)
+                modifierUpgraded.SetModifierValue(modifierUpgradeValues[currentLevel - 1]);
+        }
+        
         private void OnValidate()
         {
             if (modifierUpgraded == null)
@@ -43,8 +50,15 @@ namespace ValueSystem.Upgrades
                 Debug.LogWarning("ValueModifierUpgrade needs a value modifier to be upgraded");
                 return;
             }
+
+            if (currentLevel >= maxLevel)
+            {
+                Debug.LogWarning("Invalid level... Resetting upgrade");
+                ResetUpgrade();
+                return;
+            }
             
-            modifierUpgraded.SetModifierValue(modifierUpgradeValues[currentLevel]);
+            ApplyUpgradeToModifier();
         }
     }
 }

@@ -59,21 +59,26 @@ namespace ValueSystem.Editor
                         if (fieldType == SerializedPropertyType.Integer)
                             valueField.intValue = int.Parse(newValue);
                         else if (fieldType == SerializedPropertyType.Float)
-                            valueField.floatValue = float.Parse(newValue, System.Globalization.CultureInfo.InvariantCulture);
+                            valueField.floatValue =
+                                float.Parse(newValue, System.Globalization.CultureInfo.InvariantCulture);
                         else
                             Debug.LogWarning($"Unsupported type {fieldType} in Value<> drawer.");
-                            
+
                         tempSo.ApplyModifiedProperties();
                         EditorUtility.SetDirty(valueSO);
                     }
-                    catch { Debug.LogError("Error setting base value on " + valueSO); }
+                    catch
+                    {
+                        tempSo.Dispose();
+                        Debug.LogError("Error setting base value on " + valueSO);
+                    }
                 }
             }
             else
             {
                 //No assigned SO
                 GUI.enabled = false;
-                EditorGUI.TextField(valueRect, "No SO");
+                GUI.Button(valueRect, "No Value");
                 GUI.enabled = true;
             }
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Alchemy;
 
 public class CameraController : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _maxFOV;
     [SerializeField] private Plane.Plane _playerPlane;
     [SerializeField] private Transform _targetPointToFollow;
+    [Range(0.25f, 2.5f)]
     [SerializeField] private float _cameraFollowSpeed = 1f;
 
     private void FixedUpdate()

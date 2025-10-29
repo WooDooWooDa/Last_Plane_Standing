@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86f43293f5dc4491b8a62cc0e6ee4c73, type: 3}
   m_Name: BulletFiredCountAddMod
   m_EditorClassIdentifier: 
+  valueModified: {fileID: 0}
   negativeModifier: 0
+  baseModifier: 0
+  currentModifier: 0

@@ -8,12 +8,13 @@ namespace ValueSystem.Modifiers
     {
         public override float ApplyModifier(float valueToModify)
         {
-            return modifier * valueToModify;
+            return valueToModify * currentModifier;
         }
 
-        protected override void Reset()
+        public override void ResetModifier()
         {
-            modifier = 1f;
+            baseModifier = 1f;
+            currentModifier = baseModifier;
             modifierSymbol = "x";
         }
     }

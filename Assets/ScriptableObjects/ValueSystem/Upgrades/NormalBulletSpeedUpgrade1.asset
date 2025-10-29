@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgradeName: Bullet Speed 1
   upgradeDescription: 
-  currentLevel: 3
+  currentLevel: 0
   modifierUpgraded: {fileID: 11400000, guid: 2f02ba985ad273d468179dc54fe128e1, type: 2}
   modifierUpgradeValues:
-  - 1
   - 1.1
   - 1.2
   - 1.3

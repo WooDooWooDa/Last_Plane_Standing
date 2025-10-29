@@ -11,8 +11,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - HurtBox
+  - HitBox
   - 
   - 
   - 
@@ -44,6 +44,9 @@ TagManager:
   - name: Ocean
     uniqueID: 553070313
     locked: 0
+  - name: Ground
+    uniqueID: 2499268631
+    locked: 0
   - name: Ships
     uniqueID: 210977977
     locked: 0
@@ -52,6 +55,9 @@ TagManager:
     locked: 0
   - name: Planes
     uniqueID: 1372911663
+    locked: 0
+  - name: Effects
+    uniqueID: 2678397605
     locked: 0
   m_RenderingLayers:
   - Default
