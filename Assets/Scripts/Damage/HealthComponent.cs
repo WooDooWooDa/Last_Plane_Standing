@@ -54,6 +54,7 @@ namespace Damage
             {
                 _isDead = true;
                 onDie?.Invoke(_lastDamageSource);
+                _owner.Destroyed();
             }
             else
             {

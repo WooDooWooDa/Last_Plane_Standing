@@ -7,12 +7,16 @@ using BlackCatPool;
 using UnityEditor;
 #endif
 using UnityEngine;
+using UnityEngine.Events;
 using Object = System.Object;
 
 namespace Effects
 {
     public class SpriteAnimationEffect : MonoBehaviour, IPoolable
     {
+        public UnityAction OnEffectStarted;
+        public UnityAction OnEffectEnded;
+        
         [SerializeField] private SpriteRenderer _renderer;
         [SerializeField] private List<Sprite> _spriteFrames = new();
         [SerializeField] private float _frameDuration;
@@ -75,15 +79,17 @@ namespace Effects
         }
         public void OnDestroyed() { }
 
-        public void StartEffect()
+        public void StartEffect(UnityAction endCallback = null)
         {
+            OnEffectStarted?.Invoke();
+            OnEffectEnded = endCallback;
             StartCoroutine(EffectRoutine());
         }
         
-        public void StartEffect(Vector3 position, Transform anchorTransform = null)
+        public void StartEffect(Vector3 position, UnityAction endCallback = null, Transform anchorTransform = null)
         {
             SetEffectPosition(position, anchorTransform);
-            StartEffect();
+            StartEffect(endCallback);
         }
 
         private void SetEffectPosition(Vector3 position, Transform anchorTransform)
@@ -101,7 +107,8 @@ namespace Effects
             yield return PlayFrames();
             if  (!_returnToPoolAfterLastFrame)
                 yield return new WaitForSeconds(_durationBeforeRePooled);
-            gameObject.ReturnToPool(); 
+            gameObject.ReturnToPool();
+            OnEffectEnded?.Invoke();
         }
 
         private IEnumerator PlayFrames()

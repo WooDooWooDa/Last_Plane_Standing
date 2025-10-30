@@ -183,6 +183,7 @@ MonoBehaviour:
   _team: 1
   _movement: {fileID: 3874138780016967159}
   _cannon: {fileID: 0}
+  _destroyedEffect: {fileID: 3756799490493606023, guid: 47cee5dbbc6a8a64ab238cbae5948dbd, type: 3}
 --- !u!114 &2134561344807527065
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ namespace Damage
         /// <param name="damageType">The type of damage received.</param>
         public void TakeDamage(float amount, IDamageSource source = null, 
             IDamageSource causer = null);
+        public void Destroyed();
         HealthComponent HealthComponent { get; set; }
         Collider2D HurtBox { get; set; }
     }

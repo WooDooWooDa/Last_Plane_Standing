@@ -3,7 +3,7 @@ using Alchemy;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private Camera _camera;
+    [SerializeField] private UnityEngine.Camera _camera;
     [SerializeField] private float _minFOV;
     [SerializeField] private float _maxFOV;
     [SerializeField] private Plane.Plane _playerPlane;
@@ -19,6 +19,8 @@ public class CameraController : MonoBehaviour
         var speed = _playerPlane.planeMovement.SpeedPercentage;
         _camera.fieldOfView = Mathf.Lerp(_minFOV, _maxFOV, speed);
     }
+    
+    public Vector3 GetCameraPosition() => transform.position;
 
     private void OnDrawGizmosSelected()
     {
