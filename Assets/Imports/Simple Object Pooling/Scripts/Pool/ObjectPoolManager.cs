@@ -10,7 +10,6 @@ namespace BlackCatPool
         [SerializeField] private GameObject poolObject;
         [Min(1)][SerializeField] private int capacity = 10;
         [SerializeField] private bool isExpandable = true;
-        [SerializeField] private bool persistBetweenScenes = false;
         public GameObject PoolObject => poolObject;
         public int Capacity => capacity;
         public bool IsExpandable => isExpandable;
