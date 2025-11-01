@@ -37,7 +37,6 @@ namespace Plane
         
         public void Destroyed()
         {
-            ParallaxController.Instance.AddToParallax(transform);
             HurtBox.enabled = false;
             planeMovement.enabled = false;
             var fallSpeed = 2f;
@@ -52,17 +51,14 @@ namespace Plane
                 // ==Reached ground==
                 //Start destroy effect
                 enabled = false;
-                var destroyed = ObjectPoolManager.Instance.GetObject<SpriteAnimationEffect>(_destroyedEffect.gameObject, true);
-                ParallaxController.Instance.AddToParallax(destroyed.transform);
-                destroyed.transform.localScale = Vector3.one * 0.5f;
-                destroyed.StartEffect(transform.position, () =>
-                {
-                    ParallaxController.Instance.RemoveFromParallax(destroyed.transform);
-                    Destroy(gameObject);
-                });
+                var destroyedEffect = ObjectPoolManager.Instance.GetObject<SpriteAnimationEffect>(_destroyedEffect.gameObject, true);
+                destroyedEffect.gameObject.AddComponent<ParallaxTransform>();
+                destroyedEffect.transform.localScale = Vector3.one * 0.5f;
+                destroyedEffect.StartEffect(transform.position);
                 
                 LeanTween.cancel(rotateTween.id);
                 LeanTween.cancel(scaleDown.id);
+                Destroy(gameObject);
             });
         }
 

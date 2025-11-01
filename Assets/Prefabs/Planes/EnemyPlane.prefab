@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 2134561344807527065}
   - component: {fileID: 5157852575871451518}
   - component: {fileID: 8808504813805711617}
+  - component: {fileID: 6664013049867953919}
   m_Layer: 7
   m_Name: EnemyPlane
   m_TagString: Untagged
@@ -169,10 +170,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7caeadd581054c529ab61044382259b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _minSpeed: 35
-  _maxSpeed: 50
-  _minSteer: 30
-  _maxSteer: 60
+  _speedRange:
+    _fallbackValue: {x: 0, y: 0}
+    _value: {fileID: 0}
+  _steerRange:
+    _fallbackValue: {x: 0, y: 0}
+    _value: {fileID: 0}
 --- !u!50 &8088490403323466706
 Rigidbody2D:
   serializedVersion: 5
@@ -241,9 +244,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2e3e8d0624c4b30923418b416de1e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth:
+    _fallbackValue: 100
+    _value: {fileID: 0}
   _canHeal: 0
-  _hurtTime: 0
+  _hurtTime:
+    _fallbackValue: 0.1
+    _value: {fileID: 0}
 --- !u!61 &8808504813805711617
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -290,6 +297,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.5296915, y: 1.7235513}
   m_EdgeRadius: 0
+--- !u!114 &6664013049867953919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2504697276228827647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a86c673611b4abfac1a9cd257bccd2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7920708130948841701
 GameObject:
   m_ObjectHideFlags: 0

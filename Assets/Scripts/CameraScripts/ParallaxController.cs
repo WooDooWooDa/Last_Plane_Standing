@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ParallaxController : MonoBehaviour
@@ -12,10 +10,13 @@ public class ParallaxController : MonoBehaviour
     [SerializeField] private CameraController _cameraController;
 
     private Vector3 _lastCameraPosition;
-
+    
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = FindFirstObjectByType<ParallaxController>() ?? new GameObject(nameof(ParallaxController)).AddComponent<ParallaxController>();
+        }
     }
 
     private void Start()
