@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace ValueSystem
@@ -11,6 +12,13 @@ namespace ValueSystem
         
         public FloatSharedValueWithFallback(float fallback) => _fallbackValue = fallback;
         public FloatSharedValueWithFallback(FloatSharedValue value) => _value = value;
+        
+        [CanBeNull] public FloatSharedValue value => _value;
+        
+        public float GetBase()
+        {
+            return _value?.GetBase() ?? _fallbackValue;
+        }
         
         public float Get()
         {

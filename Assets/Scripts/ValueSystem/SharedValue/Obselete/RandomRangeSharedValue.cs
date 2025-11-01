@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using Alchemy.Inspector;
-using UnityEngine;
-using ValueSystem.Modifiers;
 using Random = UnityEngine.Random;
 
 namespace ValueSystem
 {
-    [CreateAssetMenu(fileName = "newRandomRangeValue", menuName = "SO/Values/RandomRangeValue", order = 3)]
+    //[CreateAssetMenu(fileName = "newRandomRangeValue", menuName = "SO/Values/RandomRangeValue", order = 3)]
+    [Obsolete("Use RangeSharedValue.GetRandomInRange() instead")]
     public class RandomRangeSharedValue : RangeSharedValue
     {
         public float GetRandomBase() => Random.Range(range.x, range.y);

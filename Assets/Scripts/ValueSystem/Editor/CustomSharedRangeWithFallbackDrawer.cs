@@ -8,6 +8,13 @@ namespace ValueSystem.Editor
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            // Check if this property has the DisableSharedValueDrawer attribute
+            if (fieldInfo.GetCustomAttributes(typeof(DisableSharedValueDrawerAttribute), true).Length > 0)
+            {
+                EditorGUI.PropertyField(position, property, label);
+                return;
+            }
+            
             EditorGUI.BeginProperty(position, label, property);
 
             var fallbackProp = property.FindPropertyRelative("_fallbackValue");

@@ -5,6 +5,7 @@ using Random = UnityEngine.Random;
 namespace ValueSystem
 {
     [Serializable]
+    [Obsolete("Use RangeSharedValue.GetRandomInRange() instead")]
     public class RandomRangeSharedValueWithFallback : RangeSharedValueWithFallback
     {
         public RandomRangeSharedValueWithFallback() {}

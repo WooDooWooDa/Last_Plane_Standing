@@ -1,5 +1,7 @@
 ﻿using System;
+using JetBrains.Annotations;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace ValueSystem
 {
@@ -13,6 +15,13 @@ namespace ValueSystem
         public RangeSharedValueWithFallback(RangeSharedValue value) => _value = value;
         public RangeSharedValueWithFallback() {}
 
+        [CanBeNull] public RangeSharedValue value => _value;
+        
+        public Vector2 GetBase()
+        {
+            return _value?.GetBase() ?? _fallbackValue;
+        }
+        
         public Vector2 Get()
         {
             return _value?.Get() ?? _fallbackValue;

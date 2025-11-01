@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using ValueSystem;
 
 namespace Plane
@@ -7,12 +8,10 @@ namespace Plane
     public class PlaneMovement : MonoBehaviour
     {
         public float CurrentSpeed => _currentSpeed;
-        public float SpeedPercentage => (_currentSpeed - _minSpeed) / (_maxSpeed - _minSpeed);
- 
-        [SerializeField] private float _minSpeed;
-        [SerializeField] private float _maxSpeed;
-        [SerializeField] private float _minSteer;
-        [SerializeField] private float _maxSteer;
+        public float SpeedPercentage => _currentSpeedPercentage;
+
+        [SerializeField] private RangeSharedValueWithFallback _speedRange;
+        [SerializeField] private RangeSharedValueWithFallback _steerRange;
         
         private Rigidbody2D _rb;
         
@@ -23,7 +22,7 @@ namespace Plane
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _currentSpeed = _minSpeed;
+            _currentSpeed = _speedRange.Get().x;
         }
 
         public void SetTarget(Vector3 targetPosition)
@@ -33,7 +32,9 @@ namespace Plane
         
         public void SetSpeedPercentage(float speedPercentage)
         {
-            _currentSpeed = Mathf.Lerp(_minSpeed, _maxSpeed, speedPercentage);
+            var speedRange = _speedRange.Get();
+            _currentSpeed = Mathf.Lerp(speedRange.x, speedRange.y, speedPercentage);
+            _currentSpeedPercentage = speedPercentage;
         }
 
         private void FixedUpdate()
@@ -41,7 +42,8 @@ namespace Plane
             var directionToTarget = (_targetPos - transform.position).normalized;
             var rotationSteer = Vector3.Cross(transform.up, directionToTarget).z;
 
-            _rb.angularVelocity = rotationSteer * Mathf.Lerp(_maxSteer, _minSteer, SpeedPercentage) * 10f;
+            var steerRange = _steerRange.Get();
+            _rb.angularVelocity = rotationSteer * Mathf.Lerp(steerRange.y, steerRange.x, SpeedPercentage) * 10f;
             _rb.linearVelocity = transform.up * (_currentSpeed / 10);
         }
     }

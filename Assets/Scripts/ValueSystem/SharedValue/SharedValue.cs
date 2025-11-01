@@ -12,28 +12,37 @@ namespace ValueSystem
         [SerializeField] protected string displayValueName;
         [SerializeField] protected T value;
         [SerializeField] protected bool allowEditAnywhere = false;  // Used in custom value drawer
-        [SerializeField, DisableInPlayMode] protected List<ValueModifier<T>> modifiers = new();
+        [SerializeField, DisableInPlayMode, DisableInEditMode] protected List<ValueModifier<T>> modifiers = new();
         
-        public void SetBase(T newValue) => this.value = newValue;
+        // Runtime caching
+        [NonSerialized] private T _cachedValue;
+        [NonSerialized] protected bool _isValueDirty = true;
         
         public T GetBase() => value;
         public T Get()
         {
-            return modifiers.Count <= 0 ? GetBase() :
-                modifiers.OrderBy(x => x.GetRank()).Aggregate(GetBase(), (res, next) =>
-                    next.ApplyModifier(res)
-                );
+            if (_isValueDirty)
+            {
+                _cachedValue = modifiers.Count <= 0 ? GetBase() :
+                    modifiers.OrderBy(x => x.GetRank()).Aggregate(GetBase(), (res, next) =>
+                        next.ApplyModifier(res)
+                    );
+                _isValueDirty = false;
+            }
+            return _cachedValue;
         }
 
         public void AddModifier(ValueModifier<T> modifier)
         {
             if (modifiers.Contains(modifier)) return;
             modifiers.Add(modifier);
+            _isValueDirty = true;
         }
         
         public void RemoveModifier(ValueModifier<T> modifier)
         {
             modifiers.Remove(modifier);
+            _isValueDirty = true;
         }
 
         public override string ToString()

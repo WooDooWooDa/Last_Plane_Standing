@@ -794,11 +794,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7caeadd581054c529ab61044382259b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: {fileID: 11400000, guid: b8670321f845805438b1b6dcb39adeff, type: 2}
-  _minSpeed: 35
-  _maxSpeed: 50
-  _minSteer: 30
-  _maxSteer: 60
+  _speedRange:
+    _fallbackValue: {x: 35, y: 50}
+    _value: {fileID: 0}
+  _steerRange:
+    _fallbackValue: {x: 30, y: 60}
+    _value: {fileID: 0}
 --- !u!114 &1065870024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -890,7 +891,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth:
     _fallbackValue: 100
-    _value: {fileID: 11400000, guid: 19f1a05e3ba775c48b2d86e2707a6a02, type: 2}
+    _value: {fileID: 0}
   _canHeal: 1
   _hurtTime:
     _fallbackValue: 0.1

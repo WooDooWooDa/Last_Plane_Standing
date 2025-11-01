@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 namespace ValueSystem
@@ -7,17 +8,22 @@ namespace ValueSystem
     public class RangeSharedValue : SharedValue<float>
     {
         [SerializeField] protected Vector2 range;
-        
-        public void SetBase(float low, float high) => range = new Vector2(low, high);
-        public void SetBase(Vector2 newRange) => range = newRange;
 
+        [NonSerialized] private new Vector2 _cachedValue; 
+        
         public new Vector2 GetBase() => range;
         public new Vector2 Get()
         {
-            return modifiers.Count <= 0 ? GetBase() :
-                modifiers.OrderBy(x => x.GetRank()).Aggregate(GetBase(), (res, next) =>
-                    new Vector2(next.ApplyModifier(res.x),  next.ApplyModifier(res.y))
-                );
+            if (_isValueDirty)
+            {
+                _cachedValue = modifiers.Count <= 0 ? GetBase() :
+                    modifiers.OrderBy(x => x.GetRank()).Aggregate(GetBase(), (res, next) =>
+                        new Vector2(next.ApplyModifier(res.x),  next.ApplyModifier(res.y))
+                    );
+                _isValueDirty = false;
+            }
+
+            return _cachedValue;
         }
     }
 }
