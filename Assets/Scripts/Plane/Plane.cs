@@ -24,7 +24,7 @@ namespace Plane
             set => _team = value;
         }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             HealthComponent = GetComponent<HealthComponent>();
             HurtBox = GetComponent<Collider2D>();

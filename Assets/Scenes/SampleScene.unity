@@ -794,6 +794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7caeadd581054c529ab61044382259b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  test: {fileID: 11400000, guid: b8670321f845805438b1b6dcb39adeff, type: 2}
   _minSpeed: 35
   _maxSpeed: 50
   _minSteer: 30
@@ -887,9 +888,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2e3e8d0624c4b30923418b416de1e1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 100
+  _maxHealth:
+    _fallbackValue: 100
+    _value: {fileID: 11400000, guid: 19f1a05e3ba775c48b2d86e2707a6a02, type: 2}
   _canHeal: 1
-  _hurtTime: 0.1
+  _hurtTime:
+    _fallbackValue: 0.1
+    _value: {fileID: 0}
 --- !u!1 &1075629952
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,11 +1407,11 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3874138780016967159, guid: 9a8f2006631674e449b925a5822efcf4, type: 3}
+      propertyPath: test
+      value: 
+      objectReference: {fileID: 11400000, guid: b8670321f845805438b1b6dcb39adeff, type: 2}
+    - target: {fileID: 3874138780016967159, guid: 9a8f2006631674e449b925a5822efcf4, type: 3}
       propertyPath: _maxSpeed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5157852575871451518, guid: 9a8f2006631674e449b925a5822efcf4, type: 3}
-      propertyPath: _hurtTime
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8419684049114098065, guid: 9a8f2006631674e449b925a5822efcf4, type: 3}

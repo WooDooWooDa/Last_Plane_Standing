@@ -9,9 +9,10 @@ namespace ValueSystem
 {
     public abstract class SharedValue<T> : ScriptableObject
     {
-        [SerializeField] private string displayValueName;
-        [SerializeField] private T value;
-        [SerializeField, DisableInEditMode, DisableInPlayMode] private List<ValueModifier<T>> modifiers = new();
+        [SerializeField] protected string displayValueName;
+        [SerializeField] protected T value;
+        [SerializeField] protected bool allowEditAnywhere = false;  // Used in custom value drawer
+        [SerializeField, DisableInPlayMode] protected List<ValueModifier<T>> modifiers = new();
         
         public void SetBase(T newValue) => this.value = newValue;
         

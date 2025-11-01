@@ -1,6 +1,5 @@
-﻿
-using System;
-using UnityEngine;
+﻿using UnityEngine;
+using ValueSystem;
 
 namespace Plane
 {
@@ -8,8 +7,8 @@ namespace Plane
     public class PlaneMovement : MonoBehaviour
     {
         public float CurrentSpeed => _currentSpeed;
-        public float SpeedPercentage => (_currentSpeed - _minSpeed) / (_maxSpeed - _minSpeed); 
-        
+        public float SpeedPercentage => (_currentSpeed - _minSpeed) / (_maxSpeed - _minSpeed);
+ 
         [SerializeField] private float _minSpeed;
         [SerializeField] private float _maxSpeed;
         [SerializeField] private float _minSteer;

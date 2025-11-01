@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using ValueSystem;
@@ -15,16 +16,16 @@ namespace Damage
         public UnityAction<IDamageSource> onDie;
 
         public float CurrentHealth() => _currentHealth;
-        public bool IsHurt => _isHurt;
 
         private IDamageable _owner;
         private float _currentHealth;
-        [SerializeField] private float _maxHealth = 100;
+        private float _currentMaxHealth;
+        [SerializeField] private FloatSharedValueWithFallback _maxHealth = 100f;
 
         [SerializeField] private bool _canHeal = true;
         private bool _isDead;
 
-        [SerializeField] private float _hurtTime = 0.1f;
+        [SerializeField] private FloatSharedValueWithFallback _hurtTime = 0.1f;
         private bool _isHurt;
         private Coroutine _hurtCoroutine;
 
@@ -33,7 +34,12 @@ namespace Damage
         private void Awake()
         {
             _owner = GetComponent<IDamageable>();
-            _currentHealth = _maxHealth;
+        }
+
+        private void Start()
+        {
+            _currentMaxHealth = _maxHealth.Get();
+            _currentHealth = _currentMaxHealth;
         }
 
         public void HandleDamage(float damage, IDamageSource source = null, IDamageSource causer = null)
@@ -70,7 +76,7 @@ namespace Damage
             if (!_canHeal) return;
 
             var newHealth = _currentHealth + amount;
-            _currentHealth = Mathf.Clamp(newHealth, 0, _maxHealth);
+            _currentHealth = Mathf.Clamp(newHealth, 0, _currentMaxHealth);
             onHealthChanged?.Invoke(_currentHealth);
 
             onHeal?.Invoke(amount);
@@ -86,8 +92,9 @@ namespace Damage
         private IEnumerator Hurting()
         {
             _isHurt = true;
-            if (_hurtTime > 0f)
-                yield return new WaitForSeconds(_hurtTime);
+            var hurtTime = _hurtTime.Get();
+            if (hurtTime > 0f)
+                yield return new WaitForSeconds(hurtTime);
             Recover();
         }
 

@@ -16,25 +16,25 @@ namespace ValueSystem.Upgrades
         [SerializeField] private ValueModifier<float> modifierUpgraded;
         [SerializeField] private List<float> modifierUpgradeValues = new();
 
-        private int maxLevel => modifierUpgradeValues.Count;
+        public int maxLevel => modifierUpgradeValues.Count;
 
-        [Button, ShowIf(nameof(canLevelUp))]
+        [Button, ShowIf(nameof(CanLevelUp))]
         public void LevelUp()
         {
-            if (modifierUpgradeValues.Count <= 0 || !canLevelUp) return;
+            if (modifierUpgradeValues.Count <= 0 || !CanLevelUp()) return;
             currentLevel++;
             
             ApplyUpgradeToModifier();
         }
 
         [Button, ShowIf(nameof(hasModifier))]
-        public void ResetUpgrade()
+        private void ResetUpgrade()
         {
             currentLevel = 0;
             modifierUpgraded?.ResetModifier();
         }
         
-        private bool canLevelUp => hasModifier && currentLevel < maxLevel;
+        public bool CanLevelUp() => hasModifier && currentLevel < maxLevel;
         private bool hasModifier => modifierUpgraded is not null;
 
         private void ApplyUpgradeToModifier()

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   valueModified: {fileID: 11400000, guid: 19f1a05e3ba775c48b2d86e2707a6a02, type: 2}
   negativeModifier: 0
-  baseModifier: 1
+  baseModifier: 2
   currentModifier: 1

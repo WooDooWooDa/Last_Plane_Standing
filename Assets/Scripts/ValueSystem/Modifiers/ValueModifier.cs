@@ -8,10 +8,10 @@ namespace ValueSystem.Modifiers
 {
     public abstract class ValueModifier<T> : ScriptableObject
     {
-        public T GetModifier() => currentModifier;
+        public T GetModifierValue() => currentModifier;
 
-        private SharedValue<T> _lastValueModified;  //Only use to unassign the modifier when the value changes
-        [SerializeReference, OnValueChanged(nameof(AssignModifierToValue))] private SharedValue<T> valueModified;
+        //private SharedValue<T> _lastValueModified;  //Only use to unassign the modifier when the value changes
+        //[SerializeReference, OnValueChanged(nameof(AssignModifierToValue))] private SharedValue<T> valueModified;
         [SerializeField] protected bool negativeModifier;
         [SerializeField] protected T baseModifier;
         [SerializeField, DisableInEditMode, DisableInPlayMode] protected T currentModifier;
@@ -29,12 +29,12 @@ namespace ValueSystem.Modifiers
             _ => -1
         };
 
-        private void AssignModifierToValue(SharedValue<T> newValue)
+       /* private void AssignModifierToValue(SharedValue<T> newValue)
         {
             _lastValueModified?.RemoveModifier(this);
             newValue?.AddModifier(this);
             _lastValueModified = newValue;
-        }
+        }*/
 
         private void Reset()
         {

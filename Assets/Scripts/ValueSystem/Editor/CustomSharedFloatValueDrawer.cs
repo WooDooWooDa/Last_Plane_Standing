@@ -1,6 +1,4 @@
 ﻿#if UNITY_EDITOR
-using System;
-using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,7 +11,7 @@ namespace ValueSystem.Editor
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            var valueSO = property.objectReferenceValue as ScriptableObject;
+            var valueSo = property.objectReferenceValue as ScriptableObject;
             var totalWidth = position.width;
 
             var labelRect = new Rect(position.x, position.y, EditorGUIUtility.labelWidth, EditorGUIUtility.singleLineHeight);
@@ -28,49 +26,41 @@ namespace ValueSystem.Editor
             var fieldRect = new Rect(valueRect.xMax + 5f, position.y, fieldWidth, EditorGUIUtility.singleLineHeight);
 
             // Draw current value if available
-            var valueText = "";
-            if (valueSO != null)
+            var currentValue = 0f;
+            if (valueSo != null)
             {
-                var type = valueSO.GetType();
+                var type = valueSo.GetType();
                 var getMethod = type.GetMethod("GetBase");
 
                 if (getMethod != null)
                 {
                     try
                     {
-                        object currentValue = getMethod.Invoke(valueSO, null);
-                        valueText = currentValue != null ? currentValue.ToString() : "null";
-                        valueText = valueText.Replace(',', '.');
+                        currentValue = (float)getMethod.Invoke(valueSo, null);
                     }
-                    catch { Debug.LogError("Error calling \"Get()\" on " + valueSO); }
+                    catch { Debug.LogError("Error calling \"Get()\" on " + valueSo.name); }
                 }
+                
+                // Edit current value if allowed
+                var tempSo = new SerializedObject(valueSo);
+                var allowValueEditing = tempSo.FindProperty("allowEditAnywhere").boolValue;
             
-                var newValue = EditorGUI.TextField(valueRect, valueText, EditorStyles.textField);
-
-                var tempSo = new SerializedObject(valueSO);
-                var valueField = tempSo.FindProperty("value");
-                if (newValue != valueText && valueField != null)
+                GUI.enabled = allowValueEditing;
+                var newValue = EditorGUI.FloatField(valueRect, currentValue, EditorStyles.textField);
+                GUI.enabled = true;
+                if (allowValueEditing && !Mathf.Approximately(newValue, currentValue))
                 {
                     try
                     {
-                        var fieldType = valueField.propertyType;
-
-                        Undo.RecordObject(valueSO, "Edit ValueSO Base");
-                        if (fieldType == SerializedPropertyType.Integer)
-                            valueField.intValue = int.Parse(newValue);
-                        else if (fieldType == SerializedPropertyType.Float)
-                            valueField.floatValue =
-                                float.Parse(newValue, System.Globalization.CultureInfo.InvariantCulture);
-                        else
-                            Debug.LogWarning($"Unsupported type {fieldType} in Value<> drawer.");
-
+                        Undo.RecordObject(valueSo, "Edit ValueSO Base");
+                        tempSo.FindProperty("value").floatValue = newValue;
                         tempSo.ApplyModifiedProperties();
-                        EditorUtility.SetDirty(valueSO);
+                        EditorUtility.SetDirty(valueSo);
                     }
                     catch
                     {
                         tempSo.Dispose();
-                        Debug.LogError("Error setting base value on " + valueSO);
+                        Debug.LogError("Error setting base value on " + valueSo);
                     }
                 }
             }
@@ -83,7 +73,7 @@ namespace ValueSystem.Editor
             }
 
             // Draw the object reference field
-            property.objectReferenceValue = EditorGUI.ObjectField(fieldRect, valueSO, fieldInfo.FieldType, false);
+            property.objectReferenceValue = EditorGUI.ObjectField(fieldRect, valueSo, fieldInfo.FieldType, false);
 
             EditorGUI.EndProperty();
         }

@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d83c60d7c6047c0a0aba42b4052391b, type: 3}
-  m_Name: BulletSpeedValue
+  m_Script: {fileID: 11500000, guid: 53a8ed976b864ca3a652116c344f8475, type: 3}
+  m_Name: RangeValueTest
   m_EditorClassIdentifier: 
-  displayValueName: Bullet Speed
-  value: 150
+  displayValueName: 
+  value: 0
   allowEditAnywhere: 0
-  modifiers:
-  - {fileID: 11400000, guid: 2f02ba985ad273d468179dc54fe128e1, type: 2}
+  modifiers: []
+  range: {x: 50, y: 120}
